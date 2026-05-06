@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model WaitlistEntry {
+  id         String   @id @default(cuid())
+  option     String   @db.VarChar(1)
+  optionName String   @db.VarChar(100)
+  name       String   @db.VarChar(200)
+  email      String   @db.VarChar(200)
+  situation  String   @db.Text
+  outcome    String   @db.Text
+  blocker    String   @db.Text
+  budget     String   @db.VarChar(50)
+  notes      String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([option])
+  @@index([email])
+  @@map("waitlist_entries")
+}
